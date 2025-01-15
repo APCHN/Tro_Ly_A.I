@@ -1,5 +1,21 @@
 import streamlit as st
 from openai import OpenAI
+import streamlit as st
+from utils.content_parser import parse_content_from_url
+
+st.title("Chatbot hỗ trợ đọc tài liệu từ URL (PDF, DOCX, EXCEL)")
+
+# Nhập URL hoặc đường dẫn folder
+user_input = st.text_input("Nhập đường dẫn URL của file:")
+
+if user_input:
+    if user_input.startswith("http://") or user_input.startswith("https://"):
+        st.write("Đang xử lý tài liệu từ URL...")
+        extracted_content = parse_content_from_url(user_input)
+        st.text_area("Nội dung trích xuất:", extracted_content, height=300)
+    else:
+        st.write("Vui lòng nhập URL hợp lệ.")
+
 
 def rfile(name_file):
  with open(name_file, "r", encoding="utf-8") as file:
